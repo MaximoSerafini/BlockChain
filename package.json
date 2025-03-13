@@ -11,9 +11,11 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-  "build": "tsc",
-  "test": "jest",
-  "test:watch": "jest --watch"
-}
-
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "block-chain-ts": "file:"
+  }
 }
