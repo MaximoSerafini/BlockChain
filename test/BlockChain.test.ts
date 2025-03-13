@@ -56,3 +56,21 @@ describe("PruebaBloque1", () => {
         expect(bloqueUno.hashPrevious).toBe(blockchain["bloques"][0].hash);
     });
 });
+
+describe("Verificar hashes de bloques posteriores", () => {
+    const blockchain = new BlockChain();
+    blockchain.agregarBloque("Datos del bloque 1");
+    blockchain.agregarBloque("Datos del bloque 2");
+    blockchain.agregarBloque("Datos del bloque 3");
+    
+    const bloqueUno = blockchain["bloques"][1];
+    const bloqueDos = blockchain["bloques"][2];
+    const bloqueTres = blockchain["bloques"][3];
+
+    it("Bloques posteriores deben tener hashes diferentes", () => {
+        expect(bloqueUno.hash).toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
+        expect(bloqueDos.hash).not.toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
+        expect(bloqueTres.hash).not.toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
+        expect(bloqueDos.hash).not.toBe(bloqueTres.hash);
+    });
+});

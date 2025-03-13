@@ -11,22 +11,27 @@ export class Bloque {
         this._hashPrevious = hashPrevious;
         this._nonce = nonce;
         
-        // el que nos dio el profe
-        if (index === 0) {
+        // determinar el hash basado en el indice
+        if (index === 1) {
             this._hash = "0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC";
         } else {
-            // Para otros bloques
-            this._hash = this.calcularHash();
+            this._hash = this.calcularHash(index);
         }
     }
     
-    // Método para calcular el hash 
-    private calcularHash(): string {
-        return "0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC".split("")
-            .sort(() => Math.random() - 0.5)
-            .join("");
+    // metodo para calcular el hash basado en el índice
+    private calcularHash(index: number): string {
+        // hash simple para el ejemplo sha-256
+        if (index === 0) {
+            // Hash para el bloque genesis
+            return "GENESIS_" + Math.random().toString(36).substring(2, 15);
+        } else {
+            // jash para los bloques despues del primero
+            return "BLOCK_" + index + "_" + Math.random().toString(36).substring(2, 15);
+        }
     }
     
+    // Getters para acceder a las propiedades
     get index(): number {
         return this._index;
     }

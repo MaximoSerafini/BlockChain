@@ -8,7 +8,6 @@ export class BlockChain {
     }
     
     generarBloqueGenesis() {
-        // Solo generar el bloque génesis si no hay bloques en la cadena
         if (this.bloques.length === 0) {
             const bloqueGenesis = new Bloque();
             this.bloques.push(bloqueGenesis);
@@ -19,7 +18,6 @@ export class BlockChain {
         return this.bloques.length;
     }
     
-    // Método para agregar un nuevo bloque a la cadena
     agregarBloque(data: string): Bloque {
         const ultimoBloque = this.bloques[this.bloques.length - 1];
         const nuevoIndex = ultimoBloque.index + 1;
@@ -34,7 +32,6 @@ export class BlockChain {
         return nuevoBloque;
     }
     
-    // Método para obtener un bloque específico por índice
     getBloque(index: number): Bloque | undefined {
         if (index >= 0 && index < this.bloques.length) {
             return this.bloques[index];
