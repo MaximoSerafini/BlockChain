@@ -92,3 +92,12 @@ describe("VerificarHashesDeBloquesPosteriores", () => {
     });
 });
 
+describe("Dificultad de minado 1", () => {
+    it("Los bloques deben cumplir con la dificultad 1", () => {
+        const blockchain = new BlockChain(1);
+        blockchain.agregarBloque("bloque con dificultad 1");
+        blockchain.agregarBloque("Otro bloque con dificultad 1 (el otro es fijo)")
+        const bloqueMinado = blockchain["bloques"][2]; 
+        expect(bloqueMinado.hash.startsWith("0")).toBe(true);
+    });
+});
