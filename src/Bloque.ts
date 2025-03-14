@@ -7,16 +7,29 @@ export class Bloque {
     private _nonce: number;
     private _hash: string;
     
-    constructor(index: number = 0, data: string = "Bloque Genesis", hashPrevious: string = "0", nonce: number = 0) {
+    constructor(index: number = 0, data: string = "Bloque Genesis", hashPrevious: string = "0", nonce: number = 0,dificultad: number = 1) {
         this._index = index;
         this._data = data;
         this._hashPrevious = hashPrevious;
         this._nonce = nonce;
+        this._hash = this.calcularHash();
+
+        if(index !== 0 ){
+            this.minarBloque(dificultad);
+        }
         
         // determinar el hash basado en el indice
         if (index === 1) {
             this._hash = "0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC";
         } else {
+            this._hash = this.calcularHash();
+        }
+    }
+
+    minarBloque(dificultad:number):void{
+        const prefijo = "0".repeat(dificultad);
+        while(!this._hash.startsWith(prefijo)){
+            this._nonce++;
             this._hash = this.calcularHash();
         }
     }

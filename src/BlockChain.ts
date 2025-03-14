@@ -2,9 +2,11 @@ import { Bloque } from "./Bloque";
 
 export class BlockChain {
     private bloques: Bloque[] = [];
+    private dificultad: number = 0;
     
-    constructor() {
+    constructor(dificultad: number=1) {
         this.generarBloqueGenesis();
+        this.dificultad = dificultad;
     }
     
     generarBloqueGenesis() {
@@ -25,9 +27,10 @@ export class BlockChain {
             nuevoIndex,
             data,
             ultimoBloque.hash,
-            0 // nonce inicial
+            0, // nonce inicial
+            this.dificultad // Pasar dificultad al bloque
         );
-        
+
         this.bloques.push(nuevoBloque);
         return nuevoBloque;
     }

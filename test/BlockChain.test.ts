@@ -57,6 +57,23 @@ describe("PruebaBloque1", () => {
     });
 });
 
+describe("VerificarFuncionParaCalcularHash", () => {
+
+    it("El hash debe ser consistente", () => {
+        const bloque = new Bloque(1,"Datos de prueba","0000000000000000000000000000000000000000000000000000000000000000", 123);
+        const otroBloque = new Bloque(1, "Datos de prueba", "0000000000000000000000000000000000000000000000000000000000000000", 123);
+        
+        expect(bloque.hash).toBe(otroBloque.hash);
+    })
+    it("El hash debe cambiar ", () => {
+        const bloque1 = new Bloque(1, "Datos de prueba", "0000000000000000000000000000000000000000000000000000000000000000", 23);
+        const bloque2 = new Bloque(2, "Datos de prueba", "0000000000000000000000000000000000000000000000000000000000000000", 123);
+        
+        expect(bloque1.hash).not.toBe(bloque2.hash);
+    });
+
+})
+
 describe("VerificarHashesDeBloquesPosteriores", () => {
     const blockchain = new BlockChain();
     blockchain.agregarBloque("Datos del bloque 1");
