@@ -24,17 +24,17 @@ describe("SoloSeCreaUnBloqueGenesis", () => {
     blockchain.generarBloqueGenesis(); 
     blockchain.generarBloqueGenesis(); 
     
-    it("Deberiagenerarsolounbloque genesis", () => {
+    it("DeberiaGenerarSoloBloqueGenesis", () => {
         const bloques = blockchain.getBloques();
         expect(bloques).toBe(1);
     })
 })
 
-describe("Verificarcontenidodelbloquegenesis", () => {
+describe("VerificarContenidoDelBloqueGenesis", () => {
     const blockchain = new BlockChain();
     const bloqueGenesis = blockchain["bloques"][0]; // Acceder al primer bloque
 
-    it("Elbloquegenesisdebetenerlaspropiedadesdefinidas", () => {
+    it("ElBloqueGenesisTieneLasPropiedades", () => {
         expect(bloqueGenesis).toBeInstanceOf(Bloque);
         expect(bloqueGenesis.index).toBeDefined();
         expect(bloqueGenesis.data).toBeDefined();
@@ -57,7 +57,7 @@ describe("PruebaBloque1", () => {
     });
 });
 
-describe("Verificar hashes de bloques posteriores", () => {
+describe("VerificarHashesDeBloquesPosteriores", () => {
     const blockchain = new BlockChain();
     blockchain.agregarBloque("Datos del bloque 1");
     blockchain.agregarBloque("Datos del bloque 2");
@@ -69,8 +69,9 @@ describe("Verificar hashes de bloques posteriores", () => {
 
     it("Bloques posteriores deben tener hashes diferentes", () => {
         expect(bloqueUno.hash).toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
-        expect(bloqueDos.hash).not.toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
-        expect(bloqueTres.hash).not.toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
+        expect(bloqueDos.hash).not.toBe(bloqueUno.hash && bloqueTres.hash);
+        expect(bloqueTres.hash).not.toBe(bloqueUno.hash && bloqueDos.hash);
         expect(bloqueDos.hash).not.toBe(bloqueTres.hash);
     });
 });
+
