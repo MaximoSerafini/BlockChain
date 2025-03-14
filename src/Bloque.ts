@@ -24,6 +24,10 @@ export class Bloque {
         } else {
             this._hash = this.calcularHash();
         }
+
+        if(index === 0){
+            this._hash = "0"
+        }
     }
 
     minarBloque(dificultad:number):void{

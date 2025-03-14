@@ -44,6 +44,55 @@ describe("VerificarContenidoDelBloqueGenesis", () => {
     });
 });
 
+describe("VerificarContenidoDelBloqueGenesisHash0", () => {
+    const blockchain = new BlockChain();
+
+    blockchain.agregarBloque("bloque");
+    blockchain.agregarBloque("bloque2")
+   
+    const bloqueGenesis = blockchain["bloques"][0]; // Acceder al primer bloque
+    const bloque1 = blockchain["bloques"][1];
+    const bloque2 = blockchain["bloques"][2]; 
+
+    it("ElBloqueGenesisTieneLasPropiedades", () => {
+        expect(bloqueGenesis.hash).toBe("0"); 
+        expect(blockchain.getListaBloque().length).toBe(3);
+    });
+
+    it("ElBloqueGenesisTieneLasPropiedades", () => {
+        expect(bloque1.hashPrevious).toBe("0"); 
+        expect(bloque2.hashPrevious).toBe(bloque1.hash); 
+    });
+});
+
+describe("MinandoBloquesDificultad1", () =>{
+    const blockChain = new BlockChain(1);
+
+    blockChain.agregarBloque("Bloque");
+    blockChain.agregarBloque("Bloque2"); 
+    blockChain.agregarBloque("Bloque3");
+    blockChain.agregarBloque("Bloque4");  
+
+
+    const bloque1 = blockChain["bloques"][1];
+    const bloque2 = blockChain["bloques"][2];
+    const bloque3 = blockChain["bloques"][3];
+    const bloque4 = blockChain["bloques"][4];
+
+    it("Minado de bloque", () => {
+        expect(bloque2.hash.startsWith("0")).toBe(true);
+    })
+    it("Minado de bloque", () => {
+        expect(bloque3.hash.startsWith("0")).toBe(true);
+    })
+    it("Minado de bloque", () => {
+        expect(bloque4.hash.startsWith("0")).toBe(true);
+    })
+
+})
+
+
+
 describe("PruebaBloque1", () => {
     const blockchain = new BlockChain();
     // Primero agregamos un nuevo bloque a la cadena
@@ -94,10 +143,10 @@ describe("VerificarHashesDeBloquesPosteriores", () => {
 
 describe("Dificultad de minado 1", () => {
     it("Los bloques deben cumplir con la dificultad 1", () => {
-        const blockchain = new BlockChain(1);
+        const blockchain = new BlockChain(2);
         blockchain.agregarBloque("bloque con dificultad 1");
         blockchain.agregarBloque("Otro bloque con dificultad 1 (el otro es fijo)")
         const bloqueMinado = blockchain["bloques"][2]; 
-        expect(bloqueMinado.hash.startsWith("0")).toBe(true);
+        expect(bloqueMinado.hash.startsWith("00")).toBe(true);
     });
 });
