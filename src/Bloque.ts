@@ -1,3 +1,5 @@
+import * as crypto from 'crypto';
+
 export class Bloque {
     private _index: number;
     private _data: string;
@@ -15,20 +17,14 @@ export class Bloque {
         if (index === 1) {
             this._hash = "0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC";
         } else {
-            this._hash = this.calcularHash(index);
+            this._hash = this.calcularHash();
         }
     }
     
     // metodo para calcular el hash basado en el índice
-    private calcularHash(index: number): string {
-        // hash simple para el ejemplo sha-256
-        if (index === 0) {
-            // Hash para el bloque genesis
-            return "GENESIS_" + Math.random().toString(36).substring(2, 15);
-        } else {
-            // jash para los bloques despues del primero
-            return "BLOCK_" + index + "_" + Math.random().toString(36).substring(2, 15);
-        }
+    private calcularHash(): string {
+        const data = this._index + this._hashPrevious + this._data + this._nonce;
+        return crypto.createHash('sha256').update(data).digest('hex').toUpperCase();
     }
     
     // Getters para acceder a las propiedades
