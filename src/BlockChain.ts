@@ -1,17 +1,6 @@
 import { Bloque } from "./Bloque";
 
 export class BlockChain {
-
-
-    verificarIntegridadBloque(bloque: Bloque): boolean{
-        //verficar si el hash del bloque coincide con el hash calculado
-        const hashCalculado = this.calcularHashDelBloque(bloque);
-        if (bloque.hash !=== hashCalculado){
-            return false;
-        }
-
-    
-    }
     private bloques: Bloque[] = [];
     private dificultad: number = 0;
     
