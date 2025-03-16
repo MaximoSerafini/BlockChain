@@ -44,6 +44,12 @@ export class Bloque {
         return crypto.createHash('sha256').update(data).digest('hex').toUpperCase();
     }
     
+    public esValido(dificultad: number): boolean {
+        const hash = this.calcularHash();
+        const prefijo = '0'.repeat(dificultad);
+        return this.hash === hash && this.hash.startsWith(prefijo)
+    }
+
     // Getters para acceder a las propiedades
     get index(): number {
         return this._index;
