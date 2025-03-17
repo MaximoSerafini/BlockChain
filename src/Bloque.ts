@@ -7,27 +7,21 @@ export class Bloque {
     private _nonce: number;
     private _hash: string;
     
-    constructor(index: number = 0, data: string = "Bloque Genesis", hashPrevious: string = "0", nonce: number = 0,dificultad: number = 1) {
+    constructor(index: number = 0, data: string = "Bloque Genesis", hashPrevious: string = "0", nonce: number = 0, dificultad: number = 1) {
         this._index = index;
         this._data = data;
         this._hashPrevious = hashPrevious;
         this._nonce = nonce;
-        this._hash = this.calcularHash();
-
-        if(index !== 0 ){
-            this.minarBloque(dificultad);
+        
+        // El caso especial para el bloque génesis
+        if(index === 0) {
+            this._hash = "0";
+            return;
         }
         
-        // determinar el hash basado en el indice
-        if (index === 1) {
-            this._hash = "0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC";
-        } else {
-            this._hash = this.calcularHash();
-        }
-
-        if(index === 0){
-            this._hash = "0"
-        }
+        // Para todos los demás bloques, calcular el hash y minar
+        this._hash = this.calcularHash();
+        this.minarBloque(dificultad);
     }
 
     minarBloque(dificultad:number):void{
@@ -38,7 +32,6 @@ export class Bloque {
         }
     }
     
-    // metodo para calcular el hash basado en el índice
     private calcularHash(): string {
         const data = this._index + this._hashPrevious + this._data + this._nonce;
         return crypto.createHash('sha256').update(data).digest('hex').toUpperCase();
@@ -47,10 +40,10 @@ export class Bloque {
     public esValido(dificultad: number): boolean {
         const hash = this.calcularHash();
         const prefijo = '0'.repeat(dificultad);
-        return this.hash === hash && this.hash.startsWith(prefijo)
+        return this.hash === hash && this.hash.startsWith(prefijo);
     }
 
-    // Getters para acceder a las propiedades
+    // Getters (sin cambios)
     get index(): number {
         return this._index;
     }
@@ -70,4 +63,10 @@ export class Bloque {
     get hash(): string {
         return this._hash;
     }
+
+    set hash(value: string) {
+        this._hash = value;
+    }
+
+    
 }

@@ -1,7 +1,7 @@
 import { Bloque } from "./Bloque";
 
 export class BlockChain {
-    private bloques: Bloque[] = [];
+    public bloques: Bloque[] = [];
     private dificultad: number = 0;
     
     constructor(dificultad: number=1) {
@@ -45,4 +45,20 @@ export class BlockChain {
     getListaBloque(): Bloque[]{
         return this.bloques;
     }
+
+    esCadenaValida(): boolean {
+        for (let i = 1; i < this.bloques.length; i++) {
+            const bloqueActual = this.bloques[i];
+            const bloqueAnterior = this.bloques[i - 1];
+    
+            if (bloqueActual.hashPrevious !== bloqueAnterior.hash) {
+                    return false;
+                }
+    
+            if (!bloqueActual.esValido(this.dificultad)) {
+                    return false;
+                }
+            }
+            return true;
+        }
 }

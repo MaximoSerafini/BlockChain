@@ -134,11 +134,12 @@ describe("VerificarHashesDeBloquesPosteriores", () => {
     const bloqueTres = blockchain["bloques"][3];
 
     it("Bloques posteriores deben tener hashes diferentes", () => {
-        expect(bloqueUno.hash).toBe("0E11C51A7E19E23533268A01813B3118892ACF29047D3A69407FD7874CB62BDC");
+        expect(bloqueUno.hash).toBe("08B0FBF10E0E82880256D9B1FE5BB2C53D2F37FB8B8EC2E2E55E4D452EC5EE37");
         expect(bloqueDos.hash).not.toBe(bloqueUno.hash && bloqueTres.hash);
         expect(bloqueTres.hash).not.toBe(bloqueUno.hash && bloqueDos.hash);
         expect(bloqueDos.hash).not.toBe(bloqueTres.hash);
     });
+
 });
 
 describe("Dificultad de minado 1", () => {
@@ -148,5 +149,56 @@ describe("Dificultad de minado 1", () => {
         blockchain.agregarBloque("Otro bloque con dificultad 1 (el otro es fijo)")
         const bloqueMinado = blockchain["bloques"][2]; 
         expect(bloqueMinado.hash.startsWith("00")).toBe(true);
+    });
+});
+
+describe("Verificar identidad de un bloque", () => {
+    it("Debe  validar un bloque correcto", () => {
+        const blockchain = new BlockChain(2);
+        blockchain.agregarBloque("PRUEBA");
+        const bloque = blockchain["bloques"][1]; // segundo bloque indice 1
+
+        expect(bloque.esValido(2)).toBe(true); 
+    });
+
+    it("Debe invalidar un bloque con hash incorrecto", () => {
+        const blockchain = new BlockChain(2);
+        blockchain.agregarBloque("Datos de prueba");
+        const bloque = blockchain.bloques[1];
+        bloque.hash = "hash_incorrecto";
+        
+        expect(bloque.esValido(2)).toBe(false);
+      });
+
+      it("Debe invalidar un bloque con dificultad incorrecta", () => {
+        const blockchain = new BlockChain(2);
+        blockchain.agregarBloque("Datos de prueba");
+        const bloque = blockchain.bloques[1];
+        bloque.hash = "0A"; //verifica que el hash no cumple la verificación
+        
+        expect(bloque.esValido(2)).toBe(false);
+      });
+});
+
+describe("Verificar integridad de toda la cadena", () => {
+    it("Debe detectar si algun bloque ha sido alterado", () => {
+        const blockchain = new BlockChain(2);
+        blockchain.agregarBloque("Bloque 1");
+        blockchain.agregarBloque("Bloque 2");
+        blockchain.agregarBloque("Bloque 3");
+
+        // Alterar un bloque
+        blockchain.bloques[2].hash = "hash_incorrecto";
+
+        expect(blockchain.esCadenaValida()).toBe(false);
+    });
+
+    it("Cada bloque debe tener correctamente el hashPrevious del bloque anterior", () => {
+        const blockchain = new BlockChain(2);
+        blockchain.agregarBloque("Bloque 1");
+        blockchain.agregarBloque("Bloque 2");
+        blockchain.agregarBloque("Bloque 3");
+
+        expect(blockchain.esCadenaValida()).toBe(true);
     });
 });
