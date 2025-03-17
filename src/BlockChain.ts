@@ -16,7 +16,7 @@ export class BlockChain {
         }
     }
     
-    getBloques(): number {
+    getCantidadBloques(): number {
         return this.bloques.length;
     }
     
