@@ -12,7 +12,7 @@ describe("SeCreaElBloqueGenesis", () => {
     const blockchain = new BlockChain();
     
     it("Deberiagenerarelbloquegenesis", () => {
-        const bloques = blockchain.getBloques();
+        const bloques = blockchain.getCantidadBloques();
         expect(bloques).toBe(1);
     })
 })
@@ -25,7 +25,7 @@ describe("SoloSeCreaUnBloqueGenesis", () => {
     blockchain.generarBloqueGenesis(); 
     
     it("DeberiaGenerarSoloBloqueGenesis", () => {
-        const bloques = blockchain.getBloques();
+        const bloques = blockchain.getCantidadBloques();
         expect(bloques).toBe(1);
     })
 })
